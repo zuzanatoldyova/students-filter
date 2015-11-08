@@ -1,9 +1,9 @@
 Zadání úkolu č. 2, Karotéka lidí
 ====================================
 
-**Publication date:** 8. week of the semester 
+**Zadání projektu:** 8. týden semestru
 
-**Submission deadline:** 12. week of the semester
+**Odevzdání projektu:** 12. týden semestru (Pá 11.12. 23:59)
 
 Obecné informace
 -------------------
