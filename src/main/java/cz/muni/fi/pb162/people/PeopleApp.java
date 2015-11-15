@@ -1,6 +1,6 @@
 package cz.muni.fi.pb162.people;
 
-import cz.muni.fi.pb162.people.impl.EPersonRole;
+import cz.muni.fi.pb162.people.impl.PersonRole;
 import cz.muni.fi.pb162.people.impl.PeopleStorageImpl;
 import cz.muni.fi.pb162.people.impl.Person;
 
@@ -24,9 +24,9 @@ public class PeopleApp {
      */
     public static PeopleStorage createStorage() {
         PeopleStorage storage = new PeopleStorageImpl();
-        storage.storePeople(STUDENTS_CSV_FILE, EPersonRole.STUDENT);
-        storage.storePeople(PHD_CSV_FILE, EPersonRole.PHD);
-        storage.storePeople(STAFF_CSV_FILE, EPersonRole.STAFF);
+        storage.storePeople(STUDENTS_CSV_FILE, PersonRole.STUDENT);
+        storage.storePeople(PHD_CSV_FILE, PersonRole.PHD);
+        storage.storePeople(STAFF_CSV_FILE, PersonRole.STAFF);
         return storage;
     }
 
@@ -39,11 +39,11 @@ public class PeopleApp {
         PeopleStorage storage = createStorage();
 
         Filter filter = new Filter(
-                EFilterSource.SOURCE_STUDENTS,
-                EFilterOrder.SURNAME_AND_NAME,
-                new FilterType(EFilterType.UCO, "374549", "94"),
-                new FilterType(EFilterType.NAME, "Tom"),
-                new FilterType(EFilterType.SURNAME, "Skop", "Pitner")
+                FilterSource.SOURCE_STUDENTS,
+                FilterOrder.SURNAME_AND_NAME,
+                new FilterValue(FilterType.UCO, "374549", "94"),
+                new FilterValue(FilterType.NAME, "Tom"),
+                new FilterValue(FilterType.SURNAME, "Skop", "Pitner")
         );
 
         Set<Person> people = storage.getByFilter(filter);

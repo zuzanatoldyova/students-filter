@@ -1,6 +1,6 @@
 package cz.muni.fi.pb162.people;
 
-import cz.muni.fi.pb162.people.impl.EPersonRole;
+import cz.muni.fi.pb162.people.impl.PersonRole;
 import cz.muni.fi.pb162.people.impl.Person;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ public interface PeopleStorage {
      * @param file - file contains people (string contains file name with path to it)
      * @param role - specifies role of loaded people (data in file do not contains it)
      */
-    void storePeople(String file, EPersonRole role);
+    void storePeople(String file, PersonRole role);
 
     /**
      * Save given collection into the storage. If storage already contains item this method do not override it.

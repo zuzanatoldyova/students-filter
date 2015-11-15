@@ -16,21 +16,21 @@ public class CSVReaderTest extends StorageTestBase {
     @Test
     public void readLine() {
         CSVReader r = new CSVReader();
-        Person person = r.readLine("Skopal, Tomáš:xskopal2:374549", EPersonRole.STUDENT);
+        Person person = r.parseLine("Skopal, Tomáš:xskopal2:374549", PersonRole.STUDENT);
 
         assertNotNull(person);
         assertEquals(person.getName(), "Tomáš");
         assertEquals(person.getSurname(), "Skopal");
         assertEquals(person.getLogin(), "xskopal2");
-        assertEquals(person.getUco(), Long.valueOf(374549));
+        assertEquals(Long.valueOf(person.getUco()), Long.valueOf(374549));
         assertEquals(person.getRoles().size(), 1);
-        assertTrue(person.getRoles().contains(EPersonRole.STUDENT));
+        assertTrue(person.getRoles().contains(PersonRole.STUDENT));
     }
 
     @Test
     public void readFiles() {
         CSVReader r = new CSVReader();
-        int numberOfAllPersons = r.readFile("files/all.csv", EPersonRole.STUDENT).size();
+        int numberOfAllPersons = r.readFile("files/all.csv", PersonRole.STUDENT).size();
 
         assertEquals(storage.getPeople().size(), numberOfAllPersons);
     }
@@ -40,8 +40,8 @@ public class CSVReaderTest extends StorageTestBase {
         CSVReader r = new CSVReader();
         PeopleStorageImpl storage1 = new PeopleStorageImpl();
 
-        storage1.storePeople("files/students.csv", EPersonRole.STUDENT);
-        int numberOfAllPersons = r.readFile("files/students.csv", EPersonRole.STUDENT).size();
+        storage1.storePeople("files/students.csv", PersonRole.STUDENT);
+        int numberOfAllPersons = r.readFile("files/students.csv", PersonRole.STUDENT).size();
 
         assertEquals(storage1.getPeople().size(), numberOfAllPersons);
     }
@@ -53,14 +53,14 @@ public class CSVReaderTest extends StorageTestBase {
         person.setSurname("Novak");
         person.setUco(1111L);
         person.setLogin("login");
-        person.setRoles(new HashSet<>(Arrays.asList(EPersonRole.PHD)));
+        person.setRoles(new HashSet<>(Arrays.asList(PersonRole.PHD)));
 
         Person person1 = new Person();
         person1.setName("Jan");
         person1.setSurname("Novak");
         person1.setUco(1111L);
         person1.setLogin("login");
-        person1.setRoles(new HashSet<>(Arrays.asList(EPersonRole.STAFF)));
+        person1.setRoles(new HashSet<>(Arrays.asList(PersonRole.STAFF)));
 
         Set<Person> people = new HashSet<>(Arrays.asList(person));
 
@@ -77,7 +77,7 @@ public class CSVReaderTest extends StorageTestBase {
                 .get(1111L)
                 .getRoles()
                 .containsAll(
-                        Arrays.asList(EPersonRole.PHD, EPersonRole.STAFF)
+                        Arrays.asList(PersonRole.PHD, PersonRole.STAFF)
                 )
         );
     }

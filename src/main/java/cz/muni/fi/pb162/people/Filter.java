@@ -11,35 +11,35 @@ import java.util.Set;
  */
 public class Filter {
 
-    private Set<FilterType> filterTypes = new HashSet<>();
-    private EFilterOrder filterOrder = null;
-    private EFilterSource filterSource = EFilterSource.SOURCE_ALL; // default value is ALL
+    private Set<FilterValue> filterValues = new HashSet<>();
+    private FilterOrder filterOrder = null;
+    private FilterSource filterSource = FilterSource.SOURCE_ALL; // default value is ALL
 
     /**
      * @param filterSource - filterSource
      * @param filterOrder - filterOrder
-     * @param filterTypes - filterTypes
+     * @param filterValues - filterValues
      */
-    public Filter(EFilterSource filterSource, EFilterOrder filterOrder, FilterType... filterTypes) {
-        this(filterSource, filterTypes);
+    public Filter(FilterSource filterSource, FilterOrder filterOrder, FilterValue... filterValues) {
+        this(filterSource, filterValues);
         this.filterOrder = filterOrder;
     }
 
     /**
      * @param filterSource - filterSource
-     * @param filterTypes - filterTypes
+     * @param filterValues - filterValues
      */
-    public Filter(EFilterSource filterSource, FilterType ... filterTypes) {
-        this(filterTypes);
+    public Filter(FilterSource filterSource, FilterValue... filterValues) {
+        this(filterValues);
         this.filterSource = filterSource;
     }
 
     /**
-     * @param filterTypes - filterTypes
+     * @param filterValues - filterValues
      */
-    public Filter(FilterType ... filterTypes) {
+    public Filter(FilterValue... filterValues) {
         this();
-        this.filterTypes = new HashSet<>(Arrays.asList(filterTypes));
+        this.filterValues = new HashSet<>(Arrays.asList(filterValues));
     }
 
     /**
@@ -48,19 +48,19 @@ public class Filter {
     public Filter() {}
 
 
-    public Set<FilterType> getFilterTypes() {
-        return filterTypes;
+    public Set<FilterValue> getFilterValues() {
+        return filterValues;
     }
 
-    public EFilterOrder getFilterOrder() {
+    public FilterOrder getFilterOrder() {
         return filterOrder;
     }
 
-    public EFilterSource getFilterSource() {
+    public FilterSource getFilterSource() {
         return filterSource;
     }
 
-    public void setFilterSource(EFilterSource filterSource) {
+    public void setFilterSource(FilterSource filterSource) {
         this.filterSource = filterSource;
     }
 }

@@ -25,27 +25,27 @@ public class WrongInputTest extends StorageTestBase {
         CSVReader r = new CSVReader();
 
         // surname
-        Person person = r.readLine(" , Tomáš:xskopal2:374549", EPersonRole.STUDENT);
+        Person person = r.parseLine(" , Tomáš:xskopal2:374549", PersonRole.STUDENT);
         assertNull(person);
 
         // name
-        person = r.readLine("Skopal, :xskopal2:374549", EPersonRole.STUDENT);
+        person = r.parseLine("Skopal, :xskopal2:374549", PersonRole.STUDENT);
         assertNull(person);
 
         // name - two spaces
-        person = r.readLine("Skopal,  :xskopal2:374549", EPersonRole.STUDENT);
+        person = r.parseLine("Skopal,  :xskopal2:374549", PersonRole.STUDENT);
         assertNull(person);
 
         // login
-        person = r.readLine("Skopal,  Tomáš: :374549", EPersonRole.STUDENT);
+        person = r.parseLine("Skopal,  Tomáš: :374549", PersonRole.STUDENT);
         assertNull(person);
 
         // uco
-        person = r.readLine("Skopal,  Tomáš:xskopal2:", EPersonRole.STUDENT);
+        person = r.parseLine("Skopal,  Tomáš:xskopal2:", PersonRole.STUDENT);
         assertNull(person);
 
         // uco - contains letter
-        person = r.readLine("Skopal,  Tomáš:xskopal2:374549p", EPersonRole.STUDENT);
+        person = r.parseLine("Skopal,  Tomáš:xskopal2:374549p", PersonRole.STUDENT);
         assertNull(person);
     }
 }

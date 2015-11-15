@@ -21,8 +21,8 @@ public class SimpleFilteringTest extends StorageTestBase {
     @BeforeClass
     public static void setUpBefore() {
         CSVReader reader = new CSVReader();
-        all = reader.readFile("files/all.csv", EPersonRole.STUDENT);
-        phd = reader.readFile("files/phd.csv", EPersonRole.PHD);
+        all = reader.readFile("files/all.csv", PersonRole.STUDENT);
+        phd = reader.readFile("files/phd.csv", PersonRole.PHD);
 
         int i = 0;
         for (Person p : all) {
@@ -46,8 +46,8 @@ public class SimpleFilteringTest extends StorageTestBase {
     @Test
     public void filterByUco() {
         Person person = peopleForTest.get(0);
-        FilterType filterType = new FilterType(EFilterType.UCO, person.getUco().toString());
-        Filter filter = new Filter(filterType);
+        FilterValue filterValue = new FilterValue(FilterType.UCO, String.valueOf(person.getUco()));
+        Filter filter = new Filter(filterValue);
         Set<Person> people = storage.getByFilter(filter);
 
         assertEquals("Filter by one UCO must returns just one person.", people.size(), 1);
@@ -57,8 +57,8 @@ public class SimpleFilteringTest extends StorageTestBase {
     @Test
     public void filterByName() {
         Person person = peopleForTest.get(0);
-        FilterType filterType = new FilterType(EFilterType.NAME, person.getName());
-        Filter filter = new Filter(filterType);
+        FilterValue filterValue = new FilterValue(FilterType.NAME, person.getName());
+        Filter filter = new Filter(filterValue);
         Set<Person> people = storage.getByFilter(filter);
 
         assertTrue("Result contains specified person", people.contains(person));
@@ -78,8 +78,8 @@ public class SimpleFilteringTest extends StorageTestBase {
     @Test
     public void filterBySurname() {
         Person person = peopleForTest.get(0);
-        FilterType filterType = new FilterType(EFilterType.SURNAME, person.getSurname());
-        Filter filter = new Filter(filterType);
+        FilterValue filterValue = new FilterValue(FilterType.SURNAME, person.getSurname());
+        Filter filter = new Filter(filterValue);
         Set<Person> people = storage.getByFilter(filter);
 
         assertTrue("Result contains specified person", people.contains(person));
@@ -99,8 +99,8 @@ public class SimpleFilteringTest extends StorageTestBase {
     @Test
     public void filterByLogin() {
         Person person = peopleForTest.get(0);
-        FilterType filterType = new FilterType(EFilterType.LOGIN, person.getLogin());
-        Filter filter = new Filter(filterType);
+        FilterValue filterValue = new FilterValue(FilterType.LOGIN, person.getLogin());
+        Filter filter = new Filter(filterValue);
         Set<Person> people = storage.getByFilter(filter);
 
         assertTrue("Result contains specified person", people.contains(person));
@@ -122,9 +122,9 @@ public class SimpleFilteringTest extends StorageTestBase {
         Person person = peopleForTest.get(0);
         Person person1 = peopleForTest.get(1);
         Filter filter = new Filter(
-                EFilterSource.SOURCE_ALL,
-                new FilterType(EFilterType.UCO, person.getUco().toString()),
-                new FilterType(EFilterType.SURNAME, person1.getSurname())
+                FilterSource.SOURCE_ALL,
+                new FilterValue(FilterType.UCO, String.valueOf(person.getUco())),
+                new FilterValue(FilterType.SURNAME, person1.getSurname())
         );
         Set<Person> people = storage.getByFilter(filter);
 
@@ -135,10 +135,10 @@ public class SimpleFilteringTest extends StorageTestBase {
     public void fullFilter() {
         Person person = peopleForTest.get(0);
         Filter filter = new Filter(
-                EFilterSource.SOURCE_ALL,
-                new FilterType(EFilterType.UCO, person.getUco().toString()),
-                new FilterType(EFilterType.NAME, person.getName()),
-                new FilterType(EFilterType.SURNAME, person.getSurname())
+                FilterSource.SOURCE_ALL,
+                new FilterValue(FilterType.UCO, String.valueOf(person.getUco())),
+                new FilterValue(FilterType.NAME, person.getName()),
+                new FilterValue(FilterType.SURNAME, person.getSurname())
         );
         Set<Person> people = storage.getByFilter(filter);
 
@@ -150,8 +150,8 @@ public class SimpleFilteringTest extends StorageTestBase {
     public void likeOperation() {
         Person person = peopleForTest.get(0);
         Filter filter = new Filter(
-                EFilterSource.SOURCE_ALL,
-                new FilterType(EFilterType.NAME, person.getName().substring(0, 2))
+                FilterSource.SOURCE_ALL,
+                new FilterValue(FilterType.NAME, person.getName().substring(0, 2))
         );
         System.out.println("Using person name for filtering. Name: " + person.getName().substring(0, 2));
         Set<Person> people = storage.getByFilter(filter);
@@ -163,11 +163,11 @@ public class SimpleFilteringTest extends StorageTestBase {
     @Test
     public void onlyPhd() {
         Person person = phd.iterator().next();
-        FilterType type = new FilterType(EFilterType.UCO, person.getUco().toString());
+        FilterValue type = new FilterValue(FilterType.UCO, String.valueOf(person.getUco()));
 
         // ----------- PHD - non empty --------------
         Filter filter = new Filter(
-                EFilterSource.SOURCE_PHD,
+                FilterSource.SOURCE_PHD,
                 type
         );
         Set<Person> people = storage.getByFilter(filter);
