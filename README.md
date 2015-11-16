@@ -79,7 +79,8 @@ Filtrování je nejdůležitější část tohoto úkolu. Dobře si projděte vz
 - filtr obsahuje **0-1** typ řazení filtrovaných lidí. Tzn jakým způsobem má být seřazený výsledek filtrování.
 - filtr obsahuje **0-N** typů ```filterValues``` podle kterých se mají data filtrovat. Každý typ se sestává z **právě jednoho** identifikátoru a **1-N** konkrétních hodnot. Opět viz ukázka v ```PeopleApp```.
 - mezi jednotlivými typy filtru je logická operace **AND**. Například chcete-li filtrovat podle jména a loginu. Výsledná kolekce lidí musí splňovat obě kritéria. Tedy pokud do filtru zadáte jedno učo a spoustu jmen, výsledkem bude maximálně jeden člověk. Pokud se jméno člověka s daným učem nebude shodovat ani s jedním jménem ve filtru, pak výsledkem bude prázdná množina.
-- řetězcové hodnoty (jméno, příjmení, login) se filtrují i podle částečné shody. Podobně jak funguje operátor ```LIKE``` v SQL. Například typ filtru:
+- pokud ```FilterValue``` obsahuje více hodnot (values), uvažujeme mezi nimi logický operátor **OR**. Viz vzorový příklad ve ```PeopleApp```.
+- řetězcové hodnoty (jméno, příjmení, login) se filtrují i podle částečné shody. Například typ filtru:
 
 ```java
 new FilterType(
