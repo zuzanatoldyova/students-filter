@@ -63,12 +63,12 @@ public class SimpleFilteringTest extends StorageTestBase {
 
         assertTrue("Result contains specified person", people.contains(person));
         for (Person p : people) {
-            assertEquals(p.getName(), person.getName());
+            assertTrue(p.getName().contains(person.getName()));
         }
 
         int countFromAll = 0;
         for (Person p : all) {
-            if (p.getName().equals(person.getName())) {
+            if (p.getName().contains(person.getName())) {
                 countFromAll++;
             }
         }
@@ -84,12 +84,12 @@ public class SimpleFilteringTest extends StorageTestBase {
 
         assertTrue("Result contains specified person", people.contains(person));
         for (Person p : people) {
-            assertEquals(p.getSurname(), person.getSurname());
+            assertTrue(p.getSurname().contains(person.getSurname()));
         }
 
         int countFromAll = 0;
         for (Person p : all) {
-            if (p.getSurname().equals(person.getSurname())) {
+            if (p.getSurname().contains(person.getSurname())) {
                 countFromAll++;
             }
         }
@@ -105,12 +105,12 @@ public class SimpleFilteringTest extends StorageTestBase {
 
         assertTrue("Result contains specified person", people.contains(person));
         for (Person p : people) {
-            assertEquals(p.getLogin(), person.getLogin());
+            assertTrue(p.getLogin().contains(person.getLogin()));
         }
 
         int countFromAll = 0;
         for (Person p : all) {
-            if (p.getLogin().equals(person.getLogin())) {
+            if (p.getLogin().contains(person.getLogin())) {
                 countFromAll++;
             }
         }
@@ -120,7 +120,17 @@ public class SimpleFilteringTest extends StorageTestBase {
     @Test
     public void noOne() {
         Person person = peopleForTest.get(0);
-        Person person1 = peopleForTest.get(1);
+        Person person1 = null;
+        for (Person p : peopleForTest) { // get suitable second person for test
+            if (!p.getSurname().contains(person.getSurname())) { // prevent partly surname match
+                person1 = p;
+                break;
+            }
+        }
+        if (person1 == null) {
+            System.err.println("bad input data for this test");
+            return;
+        }
         Filter filter = new Filter(
                 FilterSource.SOURCE_ALL,
                 new FilterValue(FilterType.UCO, String.valueOf(person.getUco())),
