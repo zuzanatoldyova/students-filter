@@ -4,8 +4,9 @@ import cz.muni.fi.pb162.people.impl.Person;
 import cz.muni.fi.pb162.people.impl.PersonRole;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +27,8 @@ public abstract class AbstractPersonReader {
         String line;
         Set<Person> result = new HashSet<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(new FileInputStream(pathToFile), "UTF8"))) {
 
             while ((line = br.readLine()) != null) {
 
