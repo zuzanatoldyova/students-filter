@@ -40,7 +40,7 @@ public class SimpleFilteringTest extends StorageTestBase {
     public void emptyFilter() {
         Filter filter = new Filter();
         Set<Person> people = storage.getByFilter(filter);
-        assertEquals("All people should be returned by empty filter.", people.size(), all.size());
+        assertEquals("All people should be returned by empty filter.", all.size(), people.size());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class SimpleFilteringTest extends StorageTestBase {
         Filter filter = new Filter(filterValue);
         Set<Person> people = storage.getByFilter(filter);
 
-        assertEquals("Filter by one UCO must returns just one person.", people.size(), 1);
+        assertEquals("Filter by one UCO must returns just one person.", 1, people.size());
         assertTrue("Result contains specified person", people.contains(person));
     }
 
@@ -138,7 +138,7 @@ public class SimpleFilteringTest extends StorageTestBase {
         );
         Set<Person> people = storage.getByFilter(filter);
 
-        assertEquals(people.size(), 0);
+        assertEquals(0, people.size());
     }
 
     @Test
@@ -153,7 +153,7 @@ public class SimpleFilteringTest extends StorageTestBase {
         Set<Person> people = storage.getByFilter(filter);
 
         assertTrue(people.contains(person));
-        assertEquals(people.size(), 1);
+        assertEquals(1, people.size());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class SimpleFilteringTest extends StorageTestBase {
         Set<Person> people = storage.getByFilter(filter);
 
         assertTrue(people.contains(person));
-        assertEquals(people.size(), 1);
+        assertEquals(1, people.size());
 
         // There is no test for student and staff because every phd is student and almost every is staff.
     }

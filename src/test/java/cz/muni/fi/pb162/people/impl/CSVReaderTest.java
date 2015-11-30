@@ -19,11 +19,11 @@ public class CSVReaderTest extends StorageTestBase {
         Person person = r.parseLine("Skopal, Tomáš:xskopal2:374549", PersonRole.STUDENT);
 
         assertNotNull(person);
-        assertEquals(person.getName(), "Tomáš");
-        assertEquals(person.getSurname(), "Skopal");
-        assertEquals(person.getLogin(), "xskopal2");
-        assertEquals(Long.valueOf(person.getUco()), Long.valueOf(374549));
-        assertEquals(person.getRoles().size(), 1);
+        assertEquals("Tomáš", person.getName());
+        assertEquals("Skopal", person.getSurname());
+        assertEquals("xskopal2", person.getLogin());
+        assertEquals(Long.valueOf(374549), Long.valueOf(person.getUco()));
+        assertEquals(1, person.getRoles().size());
         assertTrue(person.getRoles().contains(PersonRole.STUDENT));
     }
 
@@ -32,7 +32,7 @@ public class CSVReaderTest extends StorageTestBase {
         CSVReader r = new CSVReader();
         int numberOfAllPersons = r.readFile("files/all.csv", PersonRole.STUDENT).size();
 
-        assertEquals(storage.getPeople().size(), numberOfAllPersons);
+        assertEquals(numberOfAllPersons, storage.getPeople().size());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CSVReaderTest extends StorageTestBase {
         storage1.storePeople("files/students.csv", PersonRole.STUDENT);
         int numberOfAllPersons = r.readFile("files/students.csv", PersonRole.STUDENT).size();
 
-        assertEquals(storage1.getPeople().size(), numberOfAllPersons);
+        assertEquals(numberOfAllPersons, storage1.getPeople().size());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class CSVReaderTest extends StorageTestBase {
         people.add(person1);
         storage1.storePeople(people);
 
-        assertEquals(storage1.getPeople().size(), 1);
+        assertEquals(1, storage1.getPeople().size());
         assertTrue(
                 storage1.getPeople()
                 .get(1111L)
