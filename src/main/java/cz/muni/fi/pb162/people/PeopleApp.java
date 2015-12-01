@@ -42,7 +42,7 @@ public class PeopleApp {
                 FilterSource.SOURCE_STUDENTS,
                 FilterOrder.SURNAME_AND_NAME,
                 new FilterValue(FilterType.UCO, "374549", "94"),
-                new FilterValue(FilterType.NAME, "Tom"),
+                new FilterValue(FilterType.NAME, "Tom"),              
                 new FilterValue(FilterType.SURNAME, "Skop", "Pitner")
         );
 

@@ -7,6 +7,7 @@ import cz.muni.fi.pb162.people.PeopleStorage;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -23,10 +24,7 @@ public class PeopleStorageImpl implements PeopleStorage {
     public void storePeople(String file, PersonRole role) {
         CSVReader reader = new CSVReader();
         Set<Person> people = reader.readFile(file, role);
-        for (Person person : people) {
-            storage.put(person.getUco(), person);
-        }
-
+        storePeople(people);
     }
 
     @Override
@@ -45,23 +43,11 @@ public class PeopleStorageImpl implements PeopleStorage {
     @Override
     public Set<Person> getByFilter(Filter filter) {
         Set<Person> peopleSet;
-        switch (filter.getFilterOrder()) {
-            case UCO:
-                peopleSet = new TreeSet<>(new UcoComparator());
-                break;
-            case NAME:
-                peopleSet = new TreeSet<>(new NameComparator());
-                break;
-            case SURNAME:
-                peopleSet = new TreeSet<>(new SurnameComparator());
-                break;
-            case SURNAME_AND_NAME:
-                peopleSet = new TreeSet<>(new SurnameNameComparator());
-                break;
-            default:
-                peopleSet = new TreeSet<>();
+        if (filter.getFilterOrder() != null) {
+            peopleSet = new TreeSet<>(new PersonComparator(filter.getFilterOrder()));
+        } else {
+            peopleSet = new TreeSet<>();
         }
-
         Set<PersonRole> roles = new HashSet();
         switch (filter.getFilterSource()) {
             case SOURCE_STAFF:
@@ -93,37 +79,40 @@ public class PeopleStorageImpl implements PeopleStorage {
             }
 
         }
-        for (Person person : peopleSet) {
-            for (FilterValue v : filter.getFilterValues()) {
-                FilterType type = v.getType();
-                for (String s : v.getValues()) {
-                    switch (type) {
-                        case UCO:
-                            if (!Long.toString(person.getUco()).contains(s)) {
-                                peopleSet.remove(person);
-                            }
-                            break;
-                        case NAME:
-                            if (!person.getName().contains(s)) {
-                                peopleSet.remove(person);
-                            }
-                            break;
-                        case SURNAME:
-                            if (!person.getSurname().contains(s)) {
-                                peopleSet.remove(person);
-                            }
-                            break;
-                        case LOGIN:
-                            if (!person.getLogin().contains(s)) {
-                                peopleSet.remove(person);
-                            }
-                            break;
-                        default:
-                            break;
+
+        String parameter = "none";
+        for (FilterValue v : filter.getFilterValues()) {
+            FilterType type = v.getType();
+            Iterator<Person> it = peopleSet.iterator();
+            while (it.hasNext()) {
+                Person person = it.next();
+                switch (type) {
+                    case UCO:
+                        parameter = Long.toString(person.getUco());
+                        break;
+                    case NAME:
+                        parameter = person.getName();
+                        break;
+                    case SURNAME:
+                        parameter = person.getSurname();
+                        break;
+                    case LOGIN:
+                        parameter = person.getLogin();
+                        break;
+                    default:
+                        break;
+                }
+                int i = 0;
+                for (String t : v.getValues()) {
+                    if (parameter.contains(t)) {
+                        break;
+                    }
+                    i++;
+                    if (i == v.getValues().size()) {
+                        it.remove();
                     }
                 }
             }
-
         }
         return peopleSet;
     }

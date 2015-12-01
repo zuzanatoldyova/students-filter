@@ -9,7 +9,6 @@ import static java.lang.Long.parseLong;
  */
 public class CSVReader extends AbstractPersonReader {
 
-  
     @Override
     protected Person parseLine(String line, PersonRole type) {
         Person newPerson = new Person();
@@ -32,7 +31,7 @@ public class CSVReader extends AbstractPersonReader {
         } catch (NumberFormatException ex) {
             return null;
         }
-        
+
         newPerson.addRole(type);
 
         return newPerson;

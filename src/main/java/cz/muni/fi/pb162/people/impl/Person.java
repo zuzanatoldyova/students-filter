@@ -8,7 +8,7 @@ import java.util.Set;
  *
  * @author Zuzana Toldyova <323119@mail.muni.cz>
  */
-public class Person {
+public class Person implements Comparable<Person> {
 
     private String name;
     private String surname;
@@ -76,6 +76,7 @@ public class Person {
 
     /**
      * Adds a role to the person.
+     *
      * @param role role of the person
      */
     public void addRole(PersonRole role) {
@@ -84,6 +85,7 @@ public class Person {
 
     /**
      * Adds multiple roles to the person.
+     *
      * @param roles roles of the person
      */
     public void addRoles(Collection<PersonRole> roles) {
@@ -92,8 +94,13 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person name: " + name + ", surname: " + surname + ", login: " + login + 
-                ", uco: " + uco + ", roles: " + roles;
+        return "Person name: " + name + ", surname: " + surname + ", login: " + login
+                + ", uco: " + uco + ", roles: " + roles;
     }
-    
+
+    @Override
+    public int compareTo(Person t) {
+        return (int) (this.uco - t.getUco());
+    }
+
 }

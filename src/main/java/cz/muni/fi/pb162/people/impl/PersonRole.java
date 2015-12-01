@@ -9,5 +9,5 @@ public enum PersonRole {
     STUDENT,
     STAFF,
     PHD
-    
+
 }
