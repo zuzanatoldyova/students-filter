@@ -22,7 +22,7 @@ public class SimpleOrderingTest extends StorageTestBase {
                 previous = p;
                 continue;
             }
-            assertTrue(previous.getUco() < p.getUco());
+            assertTrue("Test for ascending order.", previous.getUco() < p.getUco());
             previous = p;
         }
     }

@@ -63,7 +63,7 @@ public class SimpleFilteringTest extends StorageTestBase {
 
         assertTrue("Result contains specified person", people.contains(person));
         for (Person p : people) {
-            assertTrue(p.getName().contains(person.getName()));
+            assertTrue("Filtered persons name must contains filtering string.", p.getName().contains(person.getName()));
         }
 
         int countFromAll = 0;
@@ -72,7 +72,7 @@ public class SimpleFilteringTest extends StorageTestBase {
                 countFromAll++;
             }
         }
-        assertEquals(countFromAll, people.size());
+        assertEquals("Filtering by name must produce exact number of people.", countFromAll, people.size());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class SimpleFilteringTest extends StorageTestBase {
 
         assertTrue("Result contains specified person", people.contains(person));
         for (Person p : people) {
-            assertTrue(p.getSurname().contains(person.getSurname()));
+            assertTrue("Filtered persons surname must contains filtering string.", p.getSurname().contains(person.getSurname()));
         }
 
         int countFromAll = 0;
@@ -93,7 +93,7 @@ public class SimpleFilteringTest extends StorageTestBase {
                 countFromAll++;
             }
         }
-        assertEquals(countFromAll, people.size());
+        assertEquals("Filtering by surname must produce exact number of people.", countFromAll, people.size());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class SimpleFilteringTest extends StorageTestBase {
 
         assertTrue("Result contains specified person", people.contains(person));
         for (Person p : people) {
-            assertTrue(p.getLogin().contains(person.getLogin()));
+            assertTrue("Filtered persons login must contains filtering string.", p.getLogin().contains(person.getLogin()));
         }
 
         int countFromAll = 0;
@@ -114,7 +114,7 @@ public class SimpleFilteringTest extends StorageTestBase {
                 countFromAll++;
             }
         }
-        assertEquals(countFromAll, people.size());
+        assertEquals("Filtering by login must produce exact number of people.", countFromAll, people.size());
     }
 
     @Test
@@ -138,7 +138,7 @@ public class SimpleFilteringTest extends StorageTestBase {
         );
         Set<Person> people = storage.getByFilter(filter);
 
-        assertEquals(0, people.size());
+        assertEquals("Filtering by incompatible uco and name have to produce empty result.", 0, people.size());
     }
 
     @Test
@@ -152,8 +152,8 @@ public class SimpleFilteringTest extends StorageTestBase {
         );
         Set<Person> people = storage.getByFilter(filter);
 
-        assertTrue(people.contains(person));
-        assertEquals(1, people.size());
+        assertTrue("Result contains person.", people.contains(person));
+        assertEquals("Full filter contains uco have to return exactly one person.", 1, people.size());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class SimpleFilteringTest extends StorageTestBase {
         System.out.println("Using person name for filtering. Name: " + person.getName().substring(0, 2));
         Set<Person> people = storage.getByFilter(filter);
 
-        assertTrue(people.size() > 0);
+        assertTrue("Filtering by some characters from name should returns at least one person.", people.size() > 0);
         assertTrue(people.contains(person));
     }
 
@@ -183,7 +183,7 @@ public class SimpleFilteringTest extends StorageTestBase {
         Set<Person> people = storage.getByFilter(filter);
 
         assertTrue(people.contains(person));
-        assertEquals(1, people.size());
+        assertEquals("Filtering by role and uco have to returns just one person.", 1, people.size());
 
         // There is no test for student and staff because every phd is student and almost every is staff.
     }
