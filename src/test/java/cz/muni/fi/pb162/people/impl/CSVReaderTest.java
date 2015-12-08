@@ -18,13 +18,13 @@ public class CSVReaderTest extends StorageTestBase {
         CSVReader r = new CSVReader();
         Person person = r.parseLine("Skopal, Tomáš:xskopal2:374549", PersonRole.STUDENT);
 
-        assertNotNull(person);
-        assertEquals(person.getName(), "Tomáš");
-        assertEquals(person.getSurname(), "Skopal");
-        assertEquals(person.getLogin(), "xskopal2");
-        assertEquals(Long.valueOf(person.getUco()), Long.valueOf(374549));
-        assertEquals(person.getRoles().size(), 1);
-        assertTrue(person.getRoles().contains(PersonRole.STUDENT));
+        assertNotNull("Person should be successfully parsed from valid line.", person);
+        assertEquals("Person must contains valid name.", "Tomáš", person.getName());
+        assertEquals("Person must contains valid surname.", "Skopal", person.getSurname());
+        assertEquals("Person must contains valid login.", "xskopal2", person.getLogin());
+        assertEquals("Person must contains valid uco.", Long.valueOf(374549), Long.valueOf(person.getUco()));
+        assertEquals("Person must contains only one role by default.", 1, person.getRoles().size());
+        assertTrue("Person role must be equal to input one.", person.getRoles().contains(PersonRole.STUDENT));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class CSVReaderTest extends StorageTestBase {
         CSVReader r = new CSVReader();
         int numberOfAllPersons = r.readFile("files/all.csv", PersonRole.STUDENT).size();
 
-        assertEquals(storage.getPeople().size(), numberOfAllPersons);
+        assertEquals("All persons must be parsed from valid file.", numberOfAllPersons, storage.getPeople().size());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CSVReaderTest extends StorageTestBase {
         storage1.storePeople("files/students.csv", PersonRole.STUDENT);
         int numberOfAllPersons = r.readFile("files/students.csv", PersonRole.STUDENT).size();
 
-        assertEquals(storage1.getPeople().size(), numberOfAllPersons);
+        assertEquals("Function storePeople must store every person.", numberOfAllPersons, storage1.getPeople().size());
     }
 
     @Test
@@ -71,8 +71,8 @@ public class CSVReaderTest extends StorageTestBase {
         people.add(person1);
         storage1.storePeople(people);
 
-        assertEquals(storage1.getPeople().size(), 1);
-        assertTrue(
+        assertEquals("Storing same person with two roles must produce only one object.", 1, storage1.getPeople().size());
+        assertTrue("Stored person must contains both roles.",
                 storage1.getPeople()
                 .get(1111L)
                 .getRoles()
