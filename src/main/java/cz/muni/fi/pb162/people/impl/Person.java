@@ -1,6 +1,7 @@
 package cz.muni.fi.pb162.people.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class Person implements Comparable<Person> {
     private String surname;
     private String login;
     private long uco;
-    private Set<PersonRole> roles = new HashSet();
+    private Set<PersonRole> roles = new HashSet<>();
 
     public String getName() {
         return name;
@@ -33,7 +34,7 @@ public class Person implements Comparable<Person> {
     }
 
     public Set<PersonRole> getRoles() {
-        return roles;
+        return Collections.unmodifiableSet(roles);
     }
 
     public void setName(String name) {

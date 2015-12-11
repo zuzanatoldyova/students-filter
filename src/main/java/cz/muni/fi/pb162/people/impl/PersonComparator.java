@@ -41,8 +41,8 @@ public class PersonComparator implements Comparator<Person>, Serializable {
                     return t.getName().compareTo(t1.getName());
                 }
                 break;
-//            default:
-//                return t.compareTo(t1);
+            default:
+                return t.compareTo(t1);
         }
         return t.compareTo(t1);
     }

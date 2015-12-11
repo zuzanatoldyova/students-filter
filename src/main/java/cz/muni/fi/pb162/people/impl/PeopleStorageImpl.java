@@ -5,6 +5,7 @@ import cz.muni.fi.pb162.people.FilterType;
 import cz.muni.fi.pb162.people.FilterValue;
 import cz.muni.fi.pb162.people.PeopleStorage;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,7 +19,7 @@ import java.util.TreeSet;
  */
 public class PeopleStorageImpl implements PeopleStorage {
 
-    private final Map<Long, Person> storage = new HashMap();
+    private final Map<Long, Person> storage = new HashMap<>();
 
     @Override
     public void storePeople(String file, PersonRole role) {
@@ -33,7 +34,6 @@ public class PeopleStorageImpl implements PeopleStorage {
             if (storage.containsKey(person.getUco())) {
                 Person updatePerson = storage.get(person.getUco());
                 updatePerson.addRoles(person.getRoles());
-                storage.put(person.getUco(), updatePerson);
             } else {
                 storage.put(person.getUco(), person);
             }
@@ -104,7 +104,9 @@ public class PeopleStorageImpl implements PeopleStorage {
                 }
                 int i = 0;
                 for (String t : v.getValues()) {
-                    if (parameter.contains(t)) {
+                    if (v.getType().equals(FilterType.UCO) && parameter.equals(t)) {
+                        break;
+                    } else if (!v.getType().equals(FilterType.UCO) && parameter.contains(t)) {
                         break;
                     }
                     i++;
@@ -119,7 +121,7 @@ public class PeopleStorageImpl implements PeopleStorage {
 
     @Override
     public Map<Long, Person> getPeople() {
-        return storage;
+        return Collections.unmodifiableMap(storage);
     }
 
 }
