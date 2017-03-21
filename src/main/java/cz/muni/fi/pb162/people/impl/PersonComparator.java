@@ -1,14 +1,13 @@
 package cz.muni.fi.pb162.people.impl;
 
 import cz.muni.fi.pb162.people.FilterOrder;
-import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  *
  * @author Zuzana Toldyova <323119@mail.muni.cz>
  */
-public class PersonComparator implements Comparator<Person>, Serializable {
+public class PersonComparator implements Comparator<Person> {
 
     private final FilterOrder order;
 

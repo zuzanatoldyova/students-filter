@@ -48,7 +48,7 @@ public class PeopleStorageImpl implements PeopleStorage {
         } else {
             peopleSet = new TreeSet<>();
         }
-        Set<PersonRole> roles = new HashSet();
+        Set<PersonRole> roles = new HashSet<>();
         switch (filter.getFilterSource()) {
             case SOURCE_STAFF:
                 roles.add(PersonRole.STAFF);
